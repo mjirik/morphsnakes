@@ -187,7 +187,7 @@ class MorphACWE(object):
             if autostop:
                 if i > 2:
                     x = [np.sum((self._u-c)**2) for c in history]
-                    if np.min(x) < 1e-6 and output != 'full':
+                    if np.min(x) < 1e-6:
                         print 'reached convergence at iteration %d'%i
                         autostopped = True
                         break
