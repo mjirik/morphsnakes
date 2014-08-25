@@ -179,9 +179,20 @@ class MorphACWE(object):
         
         self._u = res
     
-    def run(self, iterations):
+    def run(self, iterations, autostop=True):
         """Run several iterations of the morphological Chan-Vese method."""
+        autostopped = False
+        history = np.zeros((3,)+self._u.shape)
         for i in xrange(iterations):
+            if autostop:
+                if i > 2:
+                    x = [np.sum((self._u-c)**2) for c in history]
+                    if np.min(x) < 1e-6 and output != 'full':
+                        print 'reached convergence at iteration %d'%i
+                        autostopped = True
+                        break
+            history[:-1] = history[1:]
+            history[-1] = self._u
             self.step()
     
 
