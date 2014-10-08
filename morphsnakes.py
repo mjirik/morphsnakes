@@ -115,7 +115,7 @@ def glines(img, sigma=1.0):
 class MorphACWE(object):
     """Morphological ACWE based on the Chan-Vese energy functional."""
     
-    def __init__(self, data, smoothing=1, lambda1=1, lambda2=1):
+    def __init__(self, data, smoothing=1, lambda1=1, lambda2=1, levelset=None):
         """Create a Morphological ACWE solver.
         
         Parameters
@@ -137,6 +137,8 @@ class MorphACWE(object):
         self.lambda2 = lambda2
         
         self.data = data
+        if levelset is not None:
+            self.set_levelset(levelset)
     
     def set_levelset(self, u):
         self._u = np.double(u)
