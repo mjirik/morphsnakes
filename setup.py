@@ -3,6 +3,6 @@
 from distutils.core import setup
 
 setup(name='morphsnakes',
-      version = '0.0.1',
-      requires = ['scipy'],
+      version='0.0.2',
+      requires=['scipy'],
       py_modules=['morphsnakes'])
