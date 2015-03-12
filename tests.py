@@ -11,9 +11,9 @@ def rgb2gray(img):
 
 def circle_levelset(shape, center, sqradius, scalerow=1.0):
     """Build a binary function with a circle as the 0.5-levelset."""
-    R, C = np.mgrid[:shape[0], :shape[1]]
-    phi = sqradius - (np.sqrt(scalerow*(R-center[0])**2 + (C-center[1])**2))
-    u = np.float_(phi>0)
+    grid = np.mgrid[map(slice, shape)].T - center
+    phi = sqradius - np.sqrt(np.sum((grid.T)**2, 0))
+    u = np.float_(phi > 0)
     return u
 
 def test_nodule():
@@ -97,10 +97,24 @@ def test_local_smoothing():
     plt.imshow(macwe.levelset > 0, cmap='gray', interpolation='nearest')
     ax.set_title('Output Levelset')
 
+
+def test_confocal3d():
+
+    # Load the image.
+    img = np.load("testimages/confocal.npy")
+
+    # Morphological ACWE. Initialization of the level-set.
+    macwe = morphsnakes.MorphACWE(img, smoothing=1, lambda1=1, lambda2=2)
+    macwe.levelset = circle_levelset(img.shape, (30, 50, 80), 25)
+
+    # Visual evolution.
+    morphsnakes.evolve_visual3d(macwe, num_iters=200)
+
 if __name__ == '__main__':
     print """"""
     test_nodule()
     test_starfish()
     # test_local_smoothing()
     test_lakes()
+    test_confocal3d()
     ppl.show()
