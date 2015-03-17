@@ -212,7 +212,7 @@ class MorphGAC(object):
     """Morphological GAC based on the Geodesic Active Contours."""
 
     def __init__(self, data, smoothing=1, threshold=0, balloon=0,
-                 smooth_map=None):
+                 smooth_map=None, seeds=None):
         """Create a Morphological GAC solver.
 
         Parameters
@@ -230,12 +230,16 @@ class MorphGAC(object):
         smooth_map: array-like
             The smoothing parameter map. Parameter can be different in each data
             area.
+        seeds: array-like, same shape as input data
+            Set hard constraint for selected area to be object or background.
+
         """
         self._u = None
         self._v = balloon
         self._theta = threshold
         self.smoothing = smoothing
         self.smooth_map = smooth_map
+        self.seeds = seeds
 
         self.set_data(data)
 
@@ -306,6 +310,11 @@ class MorphGAC(object):
             aux += el1*el2
         res[aux > 0] = 1
         res[aux < 0] = 0
+
+        # Seeds
+        if self.seeds is not None:
+            res[self.seeds==1] = 1
+            res[self.seeds==2] = 0
 
         # Smoothing.
         if self.smooth_map is None:
