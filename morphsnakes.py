@@ -131,12 +131,18 @@ class MorphACWE(object):
         lambda1, lambda2 : scalars
             Relative importance of the inside pixels (lambda1)
             against the outside pixels (lambda2).
+        smooth_map: array-like
+            The smoothing parameter map. Parameter can be different in each data
+            area.
+        seeds: array-like, same shape as input data
+            Set hard constraint for selected area to be object or background.
         """
         self._u = None
         self.smoothing = smoothing
         self.lambda1 = lambda1
         self.lambda2 = lambda2
         self.smooth_map = smooth_map
+        self.seeds = seeds
 
         self.data = data
         if levelset is not None:
