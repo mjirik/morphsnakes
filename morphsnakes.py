@@ -116,7 +116,7 @@ class MorphACWE(object):
     """Morphological ACWE based on the Chan-Vese energy functional."""
 
     def __init__(self, data, smoothing=1, lambda1=1, lambda2=1, levelset=None,
-                 smooth_map=None):
+                 smooth_map=None, seeds=None):
         """Create a Morphological ACWE solver.
 
         Parameters
@@ -176,6 +176,11 @@ class MorphACWE(object):
         res = np.copy(u)
         res[aux < 0] = 1
         res[aux > 0] = 0
+
+        # Seeds
+        if self.seeds is not None:
+            res[self.seeds == 1] = 1
+            res[self.seeds == 2] = 0
 
         # Smoothing.
         if self.smooth_map is None:
@@ -313,8 +318,8 @@ class MorphGAC(object):
 
         # Seeds
         if self.seeds is not None:
-            res[self.seeds==1] = 1
-            res[self.seeds==2] = 0
+            res[self.seeds == 1] = 1
+            res[self.seeds == 2] = 0
 
         # Smoothing.
         if self.smooth_map is None:
