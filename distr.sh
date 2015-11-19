@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # upload to pypi
-python setup.py register sdist upload
+# python setup.py register sdist upload
 
 # build conda and upload
 
