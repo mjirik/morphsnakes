@@ -45,7 +45,7 @@ requirements:
 test:
   # Python imports
   imports:
-    - imtools
+    - morphsnakes 
 
   # commands:
     # You can put test commands to be run here.  Use this to test that the
