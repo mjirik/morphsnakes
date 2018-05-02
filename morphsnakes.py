@@ -27,6 +27,7 @@ See test.py for examples of usage.
 
 __author__ = "P. Márquez Neila <p.mneila@upm.es>"
 
+import sys
 from itertools import cycle
 
 import numpy as np
@@ -41,7 +42,10 @@ class fcycle(object):
         self.funcs = cycle(iterable)
 
     def __call__(self, *args, **kwargs):
-        f = self.funcs.next()
+        if sys.version_info.major == 2:
+            f = self.funcs.next()
+        else:
+            f = next(self.funcs)
         return f(*args, **kwargs)
 
 
