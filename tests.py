@@ -111,7 +111,7 @@ def test_confocal3d():
     morphsnakes.evolve_visual3d(macwe, num_iters=200)
 
 if __name__ == '__main__':
-    print """"""
+    print("""""")
     test_nodule()
     test_starfish()
     # test_local_smoothing()
